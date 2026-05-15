@@ -17,6 +17,11 @@ export default function ProtectedRoute({ children, allowedRoles }) {
 
     // Role-based guard (optional)
     if (allowedRoles && !allowedRoles.includes(user?.role)) {
+        console.warn('Access Denied: User role not authorized', {
+            userRole: user?.role,
+            allowedRoles,
+            path: location.pathname
+        });
         return <Navigate to="/unauthorized" replace />;
     }
 

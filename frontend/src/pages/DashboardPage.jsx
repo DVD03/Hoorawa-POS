@@ -27,6 +27,13 @@ export default function DashboardPage() {
     const { data: topProductsData } = useTopProducts({ period: 'month', limit: 5 });
     const { data: topCustomersData } = useTopCustomers({ period: 'month', limit: 5 });
 
+    console.log('Dashboard Data Check:', {
+        kpis: kpisData?.data,
+        revenue: revenueData?.data,
+        topProducts: topProductsData?.data,
+        topCustomers: topCustomersData?.data
+    });
+
     const k = kpisData?.data;
 
     const getTimeGreeting = () => {
@@ -119,7 +126,7 @@ export default function DashboardPage() {
                 <Card className="lg:col-span-2 p-6">
                     <h3 className="text-sm font-semibold text-gray-700 mb-4">Revenue Trend (Last 6 Months)</h3>
                     <ResponsiveContainer width="100%" height={280}>
-                        <LineChart data={revenueData?.data || []}>
+                        <LineChart data={Array.isArray(revenueData?.data) ? revenueData.data : []}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                             <XAxis dataKey="monthLabel" tick={{ fontSize: 12 }} />
                             <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
@@ -156,11 +163,11 @@ export default function DashboardPage() {
                         <h3 className="text-sm font-semibold text-gray-700">Top Products This Month</h3>
                         <Button variant="outline" size="sm" onClick={() => navigate('/reports/sales')}>View All</Button>
                     </div>
-                    {topProductsData?.data?.length === 0 ? (
+                    {(!topProductsData?.data || !Array.isArray(topProductsData.data) || topProductsData.data.length === 0) ? (
                         <p className="text-center text-gray-500 py-8 text-sm">No sales this month yet</p>
                     ) : (
                         <div className="space-y-2">
-                            {(topProductsData?.data || []).map((p, idx) => (
+                            {topProductsData.data.map((p, idx) => (
                                 <div key={p._id} className="flex items-center justify-between py-2 border-b last:border-0">
                                     <div className="flex items-center gap-3">
                                         <span className="w-6 h-6 bg-primary-50 text-primary-700 rounded-full flex items-center justify-center text-xs font-semibold">
@@ -186,11 +193,11 @@ export default function DashboardPage() {
                         <h3 className="text-sm font-semibold text-gray-700">Top Customers This Month</h3>
                         <Button variant="outline" size="sm" onClick={() => navigate('/customers')}>View All</Button>
                     </div>
-                    {topCustomersData?.data?.length === 0 ? (
+                    {(!topCustomersData?.data || !Array.isArray(topCustomersData.data) || topCustomersData.data.length === 0) ? (
                         <p className="text-center text-gray-500 py-8 text-sm">No invoices this month yet</p>
                     ) : (
                         <div className="space-y-2">
-                            {(topCustomersData?.data || []).map((c, idx) => (
+                            {topCustomersData.data.map((c, idx) => (
                                 <div key={c._id} className="flex items-center justify-between py-2 border-b last:border-0">
                                     <div className="flex items-center gap-3">
                                         <span className="w-6 h-6 bg-indigo-50 text-indigo-700 rounded-full flex items-center justify-center text-xs font-semibold">
@@ -222,7 +229,7 @@ export default function DashboardPage() {
                         <Button variant="outline" size="sm" onClick={() => navigate('/stock')}>View Stock</Button>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {k.stock.lowStockItems.slice(0, 10).map((item) => (
+                        {(Array.isArray(k.stock?.lowStockItems) ? k.stock.lowStockItems : []).slice(0, 10).map((item) => (
                             <div key={item.productId} className="flex items-center justify-between py-2 px-3 bg-red-50 rounded">
                                 <div>
                                     <p className="text-sm font-medium">{item.productName}</p>

@@ -93,11 +93,11 @@ export default function AttendancePage() {
                 </Button>} />
 
             <Card>
-                <div className="p-4 border-b flex gap-3">
-                    <div className="w-48">
+                <div className="p-4 border-b grid grid-cols-1 sm:flex gap-3">
+                    <div className="sm:w-48">
                         <Input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
                     </div>
-                    <div className="w-56">
+                    <div className="sm:w-56">
                         <Select placeholder="All Departments" options={deptOptions}
                             value={departmentId} onChange={(e) => setDepartmentId(e.target.value)} />
                     </div>

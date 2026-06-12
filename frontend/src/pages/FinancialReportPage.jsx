@@ -42,9 +42,13 @@ export default function FinancialReportPage() {
                 }
             />
 
-            <div className="flex gap-4 items-end mb-6 p-4 bg-white rounded-xl shadow-sm border">
-                <Input type="date" label="Start Date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                <Input type="date" label="End Date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+            <div className="grid grid-cols-1 sm:flex gap-4 sm:items-end mb-6 p-4 bg-white rounded-xl shadow-sm border">
+                <div className="flex-1">
+                    <Input type="date" label="Start Date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                </div>
+                <div className="flex-1">
+                    <Input type="date" label="End Date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                </div>
             </div>
 
             {isLoading && !report ? (

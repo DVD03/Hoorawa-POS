@@ -62,20 +62,20 @@ export default function EmployeesPage() {
                 </Button>} />
 
             <Card>
-                <div className="p-4 border-b flex gap-3">
-                    <div className="relative flex-1">
+                <div className="p-4 border-b grid grid-cols-1 sm:flex gap-3">
+                    <div className="relative flex-grow">
                         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input type="text" placeholder="Search by name, code, email..."
                             className="w-full pl-9 pr-3 py-2 border rounded-lg text-sm"
                             value={filters.search}
                             onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value, page: 1 }))} />
                     </div>
-                    <div className="w-48">
+                    <div className="sm:w-48">
                         <Select placeholder="All Departments" options={deptOptions}
                             value={filters.departmentId}
                             onChange={(e) => setFilters((f) => ({ ...f, departmentId: e.target.value, page: 1 }))} />
                     </div>
-                    <div className="w-40">
+                    <div className="sm:w-40">
                         <Select placeholder="All Statuses"
                             options={[
                                 { value: 'active', label: 'Active' },
